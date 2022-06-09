@@ -1,0 +1,152 @@
+
+# Name your project! Project names should contain only lowercase characters
+# and underscores. A good package name should reflect your organization's
+# name or the intended use of these models
+name: 'Pensionbee_Data_Model'
+version: '1.0.0'
+config-version: 2
+# version check
+require-dbt-version: ">=1.0.0"
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'Pensionbee_Data_Model'
+
+# These configurations specify where dbt should look for different types of files.
+# The `source-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
+model-paths: ["models"]
+analysis-paths: ["analysis"]
+test-paths: ["tests"]
+seed-paths: ["data"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"  # directory which will store compiled SQL files
+clean-targets:         # directories to be removed by `dbt clean`
+    - "target"
+    - "dbt_modules"
+    - "dbt_packages"
+
+vars:
+  # parternships variable is used in channel_grouping macro
+  partnerships: ('/agewage', '/benefithub', '/boringmoney', '/brentford', '/brentford-terms', '/emma', '/emma-terms', '/e-nation', '/e-nation-terms', '/gener8', '/gener8-terms', '/gohenry', '/guiide', '/guiide-terms', '/ifg', '/ifg-terms', '/lifetise', '/loyalbe', '/loyalbe-terms', '/moneymagpie', '/mttm', '/mttm-terms', '/nerdwallet', '/nutsaboutmoney', '/nutsaboutmoney-terms', '/perkbox', '/quidco', '/restless', '/snoop', '/snoop-terms', '/starling-self-employed', '/stepladder', '/times', '/times-terms', '/topcashback', '/twine', '/twine-self-employed', '/vestpod', '/vestpod-terms', '/waitrose', '/waitrose-terms', '/yolt', '/yolt-terms')
+  snowplow__incremental_materialization: "snowplow_incremental"
+  snowplow_web_page_views_this_run: "{{ ref('snowplow_web_page_views_this_run') }}"
+  snowplow_web_structured_events_this_run: "{{ ref('snowplow_web_structured_events_this_run') }}"
+  snowplow_web_page_view_events: "{{ ref('snowplow_web_page_view_events') }}"
+  snowplow_web_structured_events: "{{ ref('snowplow_web_structured_events') }}"
+  snowplow__session_stitching: true
+
+  snowplow_web:
+    snowplow__atomic_schema: 'atomic'
+    snowplow__database: 'snowplow'
+    snowplow__start_date: '2020-11-17'
+    snowplow__backfill_limit_days: 720
+    snowplow__ua_bot_filter: true
+
+
+
+
+
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+
+
+# In this example config, we tell dbt to build all models in the example/ directory
+# as tables. These settings can be overridden in the individual model files
+# using the `{{ config(...) }}` macro.
+models:
+  snowplow_web: # Only applies to models provided by the Snowplow Web dbt package
+    page_views:
+      scratch:
+        default:
+          snowplow_web_page_view_events:
+            +enabled: false
+          snowplow_web_page_views_this_run:
+            +enabled: false
+        snowflake:
+          snowplow_web_page_views_this_run:
+            +enabled: false
+    sessions:
+      scratch:
+        snowplow_web_sessions_aggs:
+          +enabled: false
+        snowplow_web_sessions_this_run:
+          +enabled: false
+
+  Pensionbee_Data_Model:
+      staging:
+          +required_tests: {"unique|not_null|unique_combination_of_columns": 1}
+          materialized: table
+          airbyte:
+              +materialized: view
+          adjust:
+              +materialized: table
+          identity:
+              stg_users_idfa_idfv:
+                  +materialized: view
+              stg_contact_key_to_subscriber_id:
+                  +materialized: view
+          facebook_ads_airbyte:
+              +materialized: view
+          snowplow:
+              stg_events_raw:
+                  +materialized: view
+      intermediate:
+          +required_tests: {"unique|not_null|unique_combination_of_columns|not_null_proportion": 1}
+          materialized: view
+          first_visit:
+              int_first_conversion:
+                  +materialized: table
+      domain:
+          +required_tests: {"unique|not_null|unique_combination_of_columns": 1}
+          materialized: view
+          dmn_attributed_events:
+              +materialized: table
+          dmn_costed_attributed_events:
+              +materialized: table
+          dmn_costed_attributed_events_paid_search:
+              +materialized: table
+      presentation:
+          +required_tests: {"unique|not_null|unique_combination_of_columns|not_null_proportion": 1}
+          +materialized: table
+          prs_users_for_analysis:
+              +enabled: false
+          prs_attribution_looker:
+              +enabled: false
+          prs_events_conversion:
+              +enabled: false
+          prs_events:
+              +enabled: false
+          prs_daily_cac:
+              +enabled: false
+          prs_roas:
+              +enabled: false
+          prs_touch_events_flattened_validated:
+              +materialized: view
+      snowplow_custom:
+        +tags: snowplow_web_incremental
+        +materialized: table
+
+# disable generic page view model for the snowplow package
+
+
+seeds:
+  Pensionbee_Data_Model:
+    # This configures data/touch_rules.csv
+    touch_rules:
+      +post-hook: "update {{ this }} set value = '' where value is null"
+      +column_types:
+        category: integer
+        attributable: boolean
+        rule: integer
+        part: integer
+        attribute: varchar
+        relation: varchar
+        value: varchar
+
+    attribution_attributes:
+      +column_types:
+        model: integer
+        category: integer
+        attribute: varchar

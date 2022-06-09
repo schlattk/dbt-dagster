@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: ads
+    database: airbyte_database
+    description: 'This is the schema containing the bing ads data.'
+    tables:
+      - name: _airbyte_raw_bing_keyword_performance_report_daily
+        description: 'This table contains bing search data, at the keyword, ad_id, ad_group_id and date level.'
+
+      - name: _airbyte_raw_bing_campaign_performance_report_daily
+        description: 'This table contains bing search data, at the campaign and date level.'
+
+      - name: _airbyte_raw_bing_ad_groups
+        description: 'This table contains info on bing ad_group, at the id (ad_group id) level.'
+
+      - name: _airbyte_raw_bing_campaigns
+        description: 'This table contains info on bing campaign, at the id (campaign id) level.'
+
+      

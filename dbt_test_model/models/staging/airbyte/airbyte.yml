@@ -1,0 +1,64 @@
+version: 2
+
+models:
+
+  - name: stg_airbyte_accounts
+    description: 'staging table for postgres accounts table'
+    columns:
+        - name: id
+          description: user_id of account
+          tests:
+          - not_null
+  - name: stg_airbyte_contribution_transactions
+    description: 'staging table for postgres contribution transactions table'
+    columns:
+        - name: id
+          description: user_id of related account
+          tests:
+          - not_null
+  - name: stg_airbyte_contributions
+    description: 'staging table for postgres contributions data'
+    columns:
+        - name: id
+          description: user_id of related account
+          tests:
+          - not_null
+  - name: stg_airbyte_leads
+    description: 'staging table for postgres lead data'
+    columns:
+        - name: id
+          description: user_id of lead
+          tests:
+          - not_null
+  - name: stg_airbyte_pensionbee_pensions
+    description: 'staging table for postgres pensionbee pension data'
+    columns:
+        - name: id
+          description: user_id of related account
+          tests:
+          - not_null
+  - name: stg_airbyte_pensions
+    description: 'staging table for postgres pension data'
+    columns:
+        - name: id
+          description: user_id of related lead/account
+          tests:
+          - not_null
+  - name: stg_airbyte_trade_requests
+    description: 'staging table for trade requests'
+    columns:
+        - name: id
+          description: id for the trade request
+          tests:
+          - not_null
+  - name: stg_airbyte_users
+    description: 'staging table for postgres user'
+    columns:
+        - name: id
+          description: user_id
+          tests:
+          - not_null
+        - name: email
+          description: email of user
+          tests:
+          - not_null
