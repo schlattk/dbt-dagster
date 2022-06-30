@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: test_schema
+    database: airbyte_database
+    description: 'This is the schema containing the test data.'
+    tables:
+      - name: _airbyte_raw_stronger_nudge__c
+        description: 'This table contains information about clients who went thorugh the stronger nudge journey.'

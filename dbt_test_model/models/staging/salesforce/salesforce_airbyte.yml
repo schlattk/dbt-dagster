@@ -6,7 +6,9 @@ models:
     description: 'staging table for salesforce stronger nudge'
     columns:
         - name: id
-          description: id of object
+          description: 'object id'
           tests:
           - not_null
+          - unique
+
   
