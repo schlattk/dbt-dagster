@@ -2,7 +2,7 @@ version: 2
 
 models:
 
-  - name: stg_airbyte_stronger_nudge
+  - name: stg_stronger_nudge
     description: 'staging table for salesforce stronger nudge'
     columns:
         - name: id
@@ -10,5 +10,3 @@ models:
           tests:
           - not_null
           - unique
-
-  
