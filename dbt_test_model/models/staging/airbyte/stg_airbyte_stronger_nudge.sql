@@ -1,3 +1,6 @@
+{{ config(materialized='table' }}
+
+
 with stronger_nudge as (
     select * from {{ source('test_schema', '_airbyte_raw_stronger_nudge__c') }}
 ),
