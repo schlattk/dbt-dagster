@@ -9,7 +9,7 @@ extracted as (
         _airbyte_data['Account__c']::varchar(255) as account__c,
         _airbyte_data['Lead__c']::varchar(255) as lead__c,
         left(_airbyte_data['CreatedDate'], 19)::timestamp as created_date,
-        _airbyte_data['Guidance_Appointment_Choice_Timestamp__c']::date as guidance_appointment_date,
+        left(_airbyte_data['Guidance_Appointment_Choice_Timestamp__c'], 19)::timestamp as guidance_appointment_date,
         _airbyte_data['Guidance_Appointment_Choice__c']::varchar(255) as guidance_appointment_choice,
         _airbyte_data['Stronger_Nudge_Status__c']::varchar(50) as stronger_nudge_status,
         _airbyte_data['Surfacing_Event__c']::varchar(50) as surfacing_event
