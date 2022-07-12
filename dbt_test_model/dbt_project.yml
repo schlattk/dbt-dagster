@@ -9,7 +9,7 @@ config-version: 2
 require-dbt-version: ">=1.0.0"
 
 # This setting configures which "profile" dbt uses for this project.
-profile: 'Pensionbee_Data_Model'
+profile: 'dbt_test_model'
 
 # These configurations specify where dbt should look for different types of files.
 # The `source-paths` config, for example, states that models in this project can be
