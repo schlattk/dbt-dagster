@@ -15,7 +15,6 @@ abort()
 *** ABORTED ***
 ***************
 '
-   $SLACK_NOTIFY_HOME/notify_slack.sh "$RUNTYPE ERROR & EXIT at stage: $STAGE"
     echo "An error occurred. Exiting at stage: $STAGE..." >&2
     exit 1
 }
@@ -28,8 +27,8 @@ STAGE="Pulling from main"
 # $SLACK_NOTIFY_HOME/notify_slack.sh "$RUNTYPE $STAGE"
 echo $STAGE
 
-git checkout main
-git pull
+# git checkout main
+# git pull
 
 STAGE="Running data model"
 # $SLACK_NOTIFY_HOME/notify_slack.sh "$RUNTYPE $STAGE"
