@@ -34,8 +34,8 @@ STAGE="Running data model"
 # $SLACK_NOTIFY_HOME/notify_slack.sh "$RUNTYPE $STAGE"
 echo $STAGE
 
-dbt deps
-dbt seed > $SEED_LOGS_HOME/dbt_seed_$LOGS_FILENAME.txt
+# dbt deps
+# dbt seed > $SEED_LOGS_HOME/dbt_seed_$LOGS_FILENAME.txt
 dbt run > $RUN_LOGS_HOME/dbt_run_$LOGS_FILENAME.txt
 
 STAGE=" data model : finished"
