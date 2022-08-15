@@ -10,3 +10,11 @@ models:
           tests:
           - not_null
           - unique
+  - name: stg_fund
+    description: 'staging table for salesforce funds'
+    columns:
+        - name: id
+          description: 'object id'
+          tests:
+          - not_null
+          - unique

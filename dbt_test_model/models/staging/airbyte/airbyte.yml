@@ -9,4 +9,10 @@ models:
           description: id of object
           tests:
           - not_null
-  
+  - name: stg_airbyte_fund__c
+    description: 'staging table for salesforce fund__c'
+    columns:
+        - name: id
+          description: id of object
+          tests:
+          - not_null
