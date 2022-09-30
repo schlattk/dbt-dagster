@@ -24,7 +24,7 @@ ranged as (
     select
         id,
         account__c,
-        lead__c,
+        lead__,
         created_date,
         guidance_appointment_date,
         guidance_appointment_choice,
