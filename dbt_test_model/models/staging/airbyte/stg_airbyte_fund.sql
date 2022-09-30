@@ -19,7 +19,7 @@ extracted as (
 ranged as (
     select
         id,
-        name,
+        names,
         total_aum,
         created_date,
         max(_airbyte_emitted_at) as _airbyte_last_emitted
