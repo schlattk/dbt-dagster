@@ -42,7 +42,7 @@ ranged as (
         guidance_appointment_date,
         guidance_appointment_choice,
         stronger_nudge_status,
-        surfacing_event
+        surfacing_even
 ),
 
 is_current as (
